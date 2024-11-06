@@ -5,7 +5,7 @@ import { supabase } from '@/libs/supabase'
 import { createDealDamageTransaction } from '@/utils/create-deal-damage-tx'
 import { fetchBossData } from '@/utils/fetch-boss-data'
 import { loadFont } from '@/utils/load-font'
-import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse, createActionHeaders } from '@solana/actions'
+import { ActionGetResponse, createActionHeaders, createPostResponse } from '@solana/actions'
 import { PublicKey } from '@solana/web3.js'
 import satori from 'satori'
 
@@ -49,7 +49,10 @@ export async function GET() {
   }
 
   return Response.json(response, {
-    headers: ACTIONS_CORS_HEADERS,
+    headers: createActionHeaders({
+      chainId: 'devnet',
+      actionVersion: '2.2.1',
+    }),
   })
 }
 

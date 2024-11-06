@@ -5,7 +5,7 @@ import { supabase } from '@/libs/supabase'
 import { createDealDamageTransaction } from '@/utils/create-deal-damage-tx'
 import { fetchBossData } from '@/utils/fetch-boss-data'
 import { loadFont } from '@/utils/load-font'
-import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
+import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse, createActionHeaders } from '@solana/actions'
 import { PublicKey } from '@solana/web3.js'
 import satori from 'satori'
 
@@ -83,7 +83,10 @@ export async function POST(req: Request) {
     })
 
     return Response.json(payload, {
-      headers: ACTIONS_CORS_HEADERS,
+      headers: createActionHeaders({
+        chainId: 'devnet',
+        actionVersion: '2.2.1',
+      }),
     })
   }
 
@@ -177,7 +180,15 @@ export async function POST(req: Request) {
   })
 
   if (error) {
-    return Response.json({ message: 'Failed to load image' }, { headers: ACTIONS_CORS_HEADERS })
+    return Response.json(
+      { message: 'Failed to load image' },
+      {
+        headers: createActionHeaders({
+          chainId: 'devnet',
+          actionVersion: '2.2.1',
+        }),
+      },
+    )
   }
 
   if (action === Action.START && type === ActionType.POST) {
@@ -248,6 +259,9 @@ export async function POST(req: Request) {
   }
 
   return Response.json(payload, {
-    headers: ACTIONS_CORS_HEADERS,
+    headers: createActionHeaders({
+      chainId: 'devnet',
+      actionVersion: '2.2.1',
+    }),
   })
 }

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import { Action, ActionType, BASE_URL, BOSS_ID, CONFIG, Font } from '@/constants'
+import { Action, ActionType, BASE_URL, BOSS_ID, CONFIG, Font, SUPABASE_URL } from '@/constants'
+import { supabase } from '@/libs/supabase'
 import { createDealDamageTransaction } from '@/utils/create-deal-damage-tx'
 import { fetchBossData } from '@/utils/fetch-boss-data'
 import { loadFont } from '@/utils/load-font'
@@ -168,10 +169,16 @@ export async function POST(req: Request) {
 
   const postfix = Date.now().toString()
 
-  await fetch(`${BASE_URL}/api/save`, {
-    method: 'POST',
-    body: JSON.stringify({ image: svg, sender: sender.toString(), postfix }),
+  const blob = new Blob([svg], { type: 'image/svg+xml' })
+  const { data, error } = await supabase.storage.from('thumbs').upload(`${BOSS_ID}-${sender}-${postfix}.svg`, blob, {
+    cacheControl: '3600',
+    upsert: false,
+    contentType: 'image/svg+xml',
   })
+
+  if (error) {
+    return Response.json({ message: 'Failed to load image' }, { headers: ACTIONS_CORS_HEADERS })
+  }
 
   if (action === Action.START && type === ActionType.POST) {
     payload = {
@@ -182,7 +189,7 @@ export async function POST(req: Request) {
           type: ActionType.INLINE,
           action: {
             description: `Started`,
-            icon: `${BASE_URL}/thumbs/${BOSS_ID}-${sender}-${postfix}.svg`,
+            icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
             label: ``,
             title: `MeepMeep | Bibada`,
             type: ActionType.ACTION,
@@ -214,7 +221,7 @@ export async function POST(req: Request) {
   if (action === Action.VERIFY && type === ActionType.POST) {
     payload = {
       type: ActionType.ACTION,
-      icon: `${BASE_URL}/thumbs/${BOSS_ID}-${sender}-${postfix}.svg`,
+      icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
       title: 'Bibada | Poisonous Planet',
       description: 'Damage Bibada to get rewards!',
       label: '',

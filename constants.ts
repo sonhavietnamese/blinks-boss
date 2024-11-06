@@ -39,3 +39,6 @@ export const BOSS_PUBLIC_KEY = new PublicKey(process.env.BOSS_PUBLIC_KEY as stri
 
 export const PROGRAM = new Program(IDL, MEEPMEEP_PROGRAM_ID, { connection: connection }) as Program<Meepmeep>
 export const BOSS_ID = process.env.BOSS_ID as string
+
+export const SUPABASE_URL = process.env.SUPABASE_URL as string
+export const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY as string

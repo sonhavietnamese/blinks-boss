@@ -173,26 +173,26 @@ export async function POST(req: Request) {
     },
   )
 
-  const postfix = Date.now().toString()
+  // const postfix = Date.now().toString()
 
-  const blob = new Blob([svg], { type: 'image/svg+xml' })
-  const { data, error } = await supabase.storage.from('thumbs').upload(`${BOSS_ID}-${sender}-${postfix}.svg`, blob, {
-    cacheControl: '3600',
-    upsert: false,
-    contentType: 'image/svg+xml',
-  })
+  // const blob = new Blob([svg], { type: 'image/svg+xml' })
+  // const { data, error } = await supabase.storage.from('thumbs').upload(`${BOSS_ID}-${sender}-${postfix}.svg`, blob, {
+  //   cacheControl: '3600',
+  //   upsert: false,
+  //   contentType: 'image/svg+xml',
+  // })
 
-  if (error) {
-    return Response.json(
-      { message: 'Failed to load image' },
-      {
-        headers: createActionHeaders({
-          chainId: 'devnet',
-          actionVersion: '2.2.1',
-        }),
-      },
-    )
-  }
+  // if (error) {
+  //   return Response.json(
+  //     { message: 'Failed to load image' },
+  //     {
+  //       headers: createActionHeaders({
+  //         chainId: 'devnet',
+  //         actionVersion: '2.2.1',
+  //       }),
+  //     },
+  //   )
+  // }
 
   if (action === Action.START && type === ActionType.POST) {
     payload = {
@@ -203,7 +203,8 @@ export async function POST(req: Request) {
           type: ActionType.INLINE,
           action: {
             description: `Started`,
-            icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
+            // icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
+            icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
             label: ``,
             title: `MeepMeep | Bibada`,
             type: ActionType.ACTION,

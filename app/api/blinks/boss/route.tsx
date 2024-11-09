@@ -1,7 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import { Action, ActionType, BASE_URL, BOSS_ID, CONFIG, Font, SUPABASE_URL } from '@/constants'
-import { supabase } from '@/libs/supabase'
+import {
+  Action,
+  ActionType,
+  BASE_URL,
+  // BOSS_ID,
+  CONFIG,
+  Font,
+  // SUPABASE_URL
+} from '@/constants'
+// import { supabase } from '@/libs/supabase'
 import { createDealDamageTransaction } from '@/utils/create-deal-damage-tx'
 import { fetchBossData } from '@/utils/fetch-boss-data'
 import { loadFont } from '@/utils/load-font'
@@ -236,7 +244,8 @@ export async function POST(req: Request) {
   if (action === Action.VERIFY && type === ActionType.POST) {
     payload = {
       type: ActionType.ACTION,
-      icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
+      // icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
+      icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
       title: 'Bibada | Poisonous Planet',
       description: 'Damage Bibada to get rewards!',
       label: '',

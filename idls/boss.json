@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "name": "meepmeep",
+  "name": "boss",
   "instructions": [
     {
       "name": "createBoss",
@@ -46,6 +46,11 @@
           "isSigner": true
         },
         {
+          "name": "record",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -55,6 +60,10 @@
         {
           "name": "damage",
           "type": "u64"
+        },
+        {
+          "name": "timestamp",
+          "type": "i64"
         }
       ]
     },
@@ -100,20 +109,8 @@
             "type": "u64"
           },
           {
-            "name": "isDefeated",
-            "type": "bool"
-          },
-          {
             "name": "bump",
             "type": "u8"
-          },
-          {
-            "name": "players",
-            "type": {
-              "vec": {
-                "defined": "PlayerInfo"
-              }
-            }
           },
           {
             "name": "owner",
@@ -121,14 +118,16 @@
           }
         ]
       }
-    }
-  ],
-  "types": [
+    },
     {
-      "name": "PlayerInfo",
+      "name": "Record",
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "boss",
+            "type": "publicKey"
+          },
           {
             "name": "address",
             "type": "publicKey"
@@ -138,8 +137,8 @@
             "type": "u64"
           },
           {
-            "name": "count",
-            "type": "u64"
+            "name": "timestamp",
+            "type": "i64"
           }
         ]
       }
@@ -149,20 +148,20 @@
     {
       "code": 6000,
       "name": "BossAlreadyDefeated",
-      "msg": "Boss is already defeated"
+      "msg": "[001] Boss is already defeated"
     },
     {
       "code": 6001,
       "name": "InsufficientFunds",
-      "msg": "Insufficient funds"
+      "msg": "[002] Insufficient funds"
     },
     {
       "code": 6002,
       "name": "NotTheOwner",
-      "msg": "Not the owner"
+      "msg": "[003] Not the owner"
     }
   ],
   "metadata": {
-    "address": "3CZyEWmVeZ962D1cxKdRHdZi1gU64T25xvxkd3xQdsDe"
+    "address": "TeUT6YMxtEEDwipTmGZYz1EnHuh3FBPcRNiznFoAft2"
   }
 }

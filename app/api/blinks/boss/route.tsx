@@ -32,7 +32,7 @@ export async function GET() {
   )
 
   const response: ActionGetResponse = {
-    type: 'action',
+    type: ActionType.ACTION,
     icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
     title: 'Bibada | Poisonous Planet',
     description: 'Damage Bibada to get rewards!',
@@ -108,6 +108,9 @@ export async function POST(req: Request) {
           <div tw='w-[300px] h-[24px] bg-[#544656]'></div>
           <div tw='h-[24px] bg-[#51AF6E] absolute origin-left left-3' style={{ width: 302 * (boss.health / boss.maxHealth) }}></div>
           <img src={`${BASE_URL}/ui/boss-hp-bar.png`} width={328} height={30} tw='w-full h-full absolute' />
+          <span tw='text-[18px] font-backbeat text-white -top-[20px]'>
+            {boss.health.toLocaleString()}/{boss.maxHealth.toLocaleString()}
+          </span>
         </div>
       </div>
 
@@ -225,6 +228,11 @@ export async function POST(req: Request) {
                   href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=5000&type=${ActionType.TRANSACTION}`,
                   type: ActionType.TRANSACTION,
                 },
+                {
+                  label: `Stats`,
+                  href: `/api/blinks/boss?action=${Action.STATS}&type=${ActionType.EXTERNAL_LINK}`,
+                  type: ActionType.EXTERNAL_LINK,
+                },
               ],
             },
           },
@@ -258,7 +266,54 @@ export async function POST(req: Request) {
             href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=5000&type=${ActionType.TRANSACTION}`,
             type: ActionType.TRANSACTION,
           },
+          {
+            label: `Stats`,
+            href: `/api/blinks/boss?action=${Action.STATS}&type=${ActionType.EXTERNAL_LINK}`,
+            type: ActionType.EXTERNAL_LINK,
+          },
         ],
+      },
+    }
+  }
+
+  if (action === Action.STATS && type === ActionType.EXTERNAL_LINK) {
+    payload = {
+      type: ActionType.EXTERNAL_LINK,
+      externalLink: `https://www.anchor-lang.com/docs/tic-tac-toe`,
+      links: {
+        next: {
+          type: ActionType.INLINE,
+          action: {
+            icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
+            title: 'Bibada | Poisonous Planet',
+            description: 'Damage Bibada to get rewards!',
+            label: '',
+            links: {
+              actions: [
+                {
+                  label: `⚔️ 100 DMG`,
+                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=100&type=${ActionType.TRANSACTION}`,
+                  type: ActionType.TRANSACTION,
+                },
+                {
+                  label: `⚔️ 1,000 DMG`,
+                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=1000&type=${ActionType.TRANSACTION}`,
+                  type: ActionType.TRANSACTION,
+                },
+                {
+                  label: `⚔️ 5,000 DMG`,
+                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=5000&type=${ActionType.TRANSACTION}`,
+                  type: ActionType.TRANSACTION,
+                },
+                {
+                  label: `Stats`,
+                  href: `/api/blinks/boss?action=${Action.STATS}&type=${ActionType.EXTERNAL_LINK}`,
+                  type: ActionType.EXTERNAL_LINK,
+                },
+              ],
+            },
+          },
+        },
       },
     }
   }

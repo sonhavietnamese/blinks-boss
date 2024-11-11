@@ -4,11 +4,19 @@ import { formatDamage } from './format-damage'
 
 export const fetchBossData = async (myAddress: string) => {
   const boss = await PROGRAM.account.boss.fetch(BOSS_PUBLIC_KEY)
-
-  const players = boss.players
-    .map((player) => ({
-      address: player.address.toString(),
-      damage: Number(player.damage),
+  const records = await PROGRAM.account.record.all([
+    {
+      memcmp: {
+        offset: 8,
+        bytes: BOSS_PUBLIC_KEY.toBase58(),
+      },
+    },
+  ])
+ 
+  const players = records
+    .map((record) => ({
+      address: record.account.address.toString(),
+      damage: Number(record.account.damage),
     }))
     .sort((a, b) => b.damage - a.damage)
     .slice(0, 5)
@@ -23,11 +31,13 @@ export const fetchBossData = async (myAddress: string) => {
 
   const cleanup = {
     health: Number(boss.health),
-    maxHealth: 100_000,
+    maxHealth: Number(boss.maxHealth),
     players,
     leftPlayer,
     rightPlayer,
   }
+
+  console.log(cleanup)
 
   return cleanup
 }

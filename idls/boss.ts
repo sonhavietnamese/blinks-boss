@@ -1,6 +1,6 @@
-export type Meepmeep = {
+export type Boss = {
   version: '0.1.0'
-  name: 'meepmeep'
+  name: 'boss'
   instructions: [
     {
       name: 'createBoss'
@@ -46,6 +46,11 @@ export type Meepmeep = {
           isSigner: true
         },
         {
+          name: 'record'
+          isMut: true
+          isSigner: false
+        },
+        {
           name: 'systemProgram'
           isMut: false
           isSigner: false
@@ -55,6 +60,10 @@ export type Meepmeep = {
         {
           name: 'damage'
           type: 'u64'
+        },
+        {
+          name: 'timestamp'
+          type: 'i64'
         },
       ]
     },
@@ -100,20 +109,12 @@ export type Meepmeep = {
             type: 'u64'
           },
           {
-            name: 'isDefeated'
-            type: 'bool'
+            name: 'maxHealth'
+            type: 'u64'
           },
           {
             name: 'bump'
             type: 'u8'
-          },
-          {
-            name: 'players'
-            type: {
-              vec: {
-                defined: 'PlayerInfo'
-              }
-            }
           },
           {
             name: 'owner'
@@ -122,13 +123,15 @@ export type Meepmeep = {
         ]
       }
     },
-  ]
-  types: [
     {
-      name: 'PlayerInfo'
+      name: 'record'
       type: {
         kind: 'struct'
         fields: [
+          {
+            name: 'boss'
+            type: 'publicKey'
+          },
           {
             name: 'address'
             type: 'publicKey'
@@ -138,8 +141,8 @@ export type Meepmeep = {
             type: 'u64'
           },
           {
-            name: 'count'
-            type: 'u64'
+            name: 'timestamp'
+            type: 'i64'
           },
         ]
       }
@@ -149,24 +152,24 @@ export type Meepmeep = {
     {
       code: 6000
       name: 'BossAlreadyDefeated'
-      msg: 'Boss is already defeated'
+      msg: '[001] Boss is already defeated'
     },
     {
       code: 6001
       name: 'InsufficientFunds'
-      msg: 'Insufficient funds'
+      msg: '[002] Insufficient funds'
     },
     {
       code: 6002
       name: 'NotTheOwner'
-      msg: 'Not the owner'
+      msg: '[003] Not the owner'
     },
   ]
 }
 
-export const IDL: Meepmeep = {
+export const IDL: Boss = {
   version: '0.1.0',
-  name: 'meepmeep',
+  name: 'boss',
   instructions: [
     {
       name: 'createBoss',
@@ -212,6 +215,11 @@ export const IDL: Meepmeep = {
           isSigner: true,
         },
         {
+          name: 'record',
+          isMut: true,
+          isSigner: false,
+        },
+        {
           name: 'systemProgram',
           isMut: false,
           isSigner: false,
@@ -221,6 +229,10 @@ export const IDL: Meepmeep = {
         {
           name: 'damage',
           type: 'u64',
+        },
+        {
+          name: 'timestamp',
+          type: 'i64',
         },
       ],
     },
@@ -266,20 +278,12 @@ export const IDL: Meepmeep = {
             type: 'u64',
           },
           {
-            name: 'isDefeated',
-            type: 'bool',
+            name: 'maxHealth',
+            type: 'u64',
           },
           {
             name: 'bump',
             type: 'u8',
-          },
-          {
-            name: 'players',
-            type: {
-              vec: {
-                defined: 'PlayerInfo',
-              },
-            },
           },
           {
             name: 'owner',
@@ -288,13 +292,15 @@ export const IDL: Meepmeep = {
         ],
       },
     },
-  ],
-  types: [
     {
-      name: 'PlayerInfo',
+      name: 'record',
       type: {
         kind: 'struct',
         fields: [
+          {
+            name: 'boss',
+            type: 'publicKey',
+          },
           {
             name: 'address',
             type: 'publicKey',
@@ -304,8 +310,8 @@ export const IDL: Meepmeep = {
             type: 'u64',
           },
           {
-            name: 'count',
-            type: 'u64',
+            name: 'timestamp',
+            type: 'i64',
           },
         ],
       },
@@ -315,17 +321,17 @@ export const IDL: Meepmeep = {
     {
       code: 6000,
       name: 'BossAlreadyDefeated',
-      msg: 'Boss is already defeated',
+      msg: '[001] Boss is already defeated',
     },
     {
       code: 6001,
       name: 'InsufficientFunds',
-      msg: 'Insufficient funds',
+      msg: '[002] Insufficient funds',
     },
     {
       code: 6002,
       name: 'NotTheOwner',
-      msg: 'Not the owner',
+      msg: '[003] Not the owner',
     },
   ],
 }

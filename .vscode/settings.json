@@ -28,9 +28,7 @@
   },
   "editor.accessibilitySupport": "off",
   "editor.codeActionsOnSave": {
-    // "source.organizeImports.biome": "explicit",
-    // "quickfix.biome": "explicit"
-    "source.organizeImports": true,
+    "source.organizeImports": "explicit",
     "source.fixAll.eslint": "always"
   },
   "editor.cursorBlinking": "smooth",

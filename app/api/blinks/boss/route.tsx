@@ -181,9 +181,7 @@ export async function POST(req: Request) {
         <div tw='flex flex-col w-[250px] absolute gap-12 top-[75px] items-center pl-12 pr-9 justify-center z-[10]'>
           {boss.players.map((player, index) => (
             <div key={index} tw='flex items-center justify-between w-full mt-[3px]'>
-              <span tw='text-white text-[20px] font-backbeat'>
-                {player.address === sender.toString() ? 'You' : formatWallet(player.address, 3, '...')}
-              </span>
+              <span tw='text-white text-[20px] font-backbeat'>{player.address === 'You' ? 'You' : formatWallet(player.address, 3, '...')}</span>
               <span tw='text-white text-[19px] font-backbeat'>{player.damage}</span>
             </div>
           ))}

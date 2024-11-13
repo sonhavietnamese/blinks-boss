@@ -4,6 +4,7 @@ import { Action, ActionType, BASE_URL, BOSS_ID, CONFIG, Font, SUPABASE_URL } fro
 import { supabase } from '@/libs/supabase'
 import { createDealDamageTransaction } from '@/utils/create-deal-damage-tx'
 import { fetchBossData } from '@/utils/fetch-boss-data'
+import { formatWallet } from '@/utils/format-wallet'
 import { loadFont } from '@/utils/load-font'
 import { ActionGetResponse, createActionHeaders, createPostResponse } from '@solana/actions'
 import { PublicKey } from '@solana/web3.js'
@@ -140,19 +141,19 @@ export async function POST(req: Request) {
       {boss.leftPlayer && (
         <div tw='absolute inset-0 w-full h-full flex flex-col items-center justify-center'>
           <img
-            src={`${BASE_URL}/left/compressed-cute-butterfly-a.png`}
+            src={`${BASE_URL}/left/compressed-${boss.leftCharacter}.png`}
             width={CONFIG.IMAGE_WIDTH}
             height={CONFIG.IMAGE_HEIGHT}
             tw='w-full h-full absolute'
           />
 
-          <span tw='text-white absolute left-[80px] top-[490px] text-[28px] font-backbeat'>{boss.leftPlayer.address}</span>
+          <span tw='text-white absolute left-[80px] top-[490px] text-[28px] font-backbeat'>{formatWallet(boss.leftPlayer.address, 3, '..')}</span>
         </div>
       )}
 
       <div tw='absolute inset-0 w-full h-full flex flex-col top-10 items-center justify-center'>
         <img
-          src={`${BASE_URL}/middle/compressed-cute-butterfly-b.png`}
+          src={`${BASE_URL}/middle/compressed-${boss.myCharacter}.png`}
           width={CONFIG.IMAGE_WIDTH}
           height={CONFIG.IMAGE_HEIGHT}
           tw='w-full h-full absolute'
@@ -164,13 +165,13 @@ export async function POST(req: Request) {
       {boss.rightPlayer && (
         <div tw='absolute inset-0 w-full h-full flex flex-col items-center justify-center'>
           <img
-            src={`${BASE_URL}/right/compressed-cute-butterfly-a.png`}
+            src={`${BASE_URL}/right/compressed-${boss.rightCharacter}.png`}
             width={CONFIG.IMAGE_WIDTH}
             height={CONFIG.IMAGE_HEIGHT}
             tw='w-full h-full absolute'
           />
 
-          <span tw='text-white absolute right-[20px] top-[460px] text-[28px] font-backbeat'>{boss.rightPlayer.address}</span>
+          <span tw='text-white absolute right-[20px] top-[460px] text-[28px] font-backbeat'>{formatWallet(boss.rightPlayer.address, 3, '..')}</span>
         </div>
       )}
 
@@ -180,7 +181,7 @@ export async function POST(req: Request) {
         <div tw='flex flex-col w-[250px] absolute gap-12 top-[75px] items-center pl-12 pr-9 justify-center z-[10]'>
           {boss.players.map((player, index) => (
             <div key={index} tw='flex items-center justify-between w-full mt-[3px]'>
-              <span tw='text-white text-[20px] font-backbeat'>{player.address}</span>
+              <span tw='text-white text-[20px] font-backbeat'>{formatWallet(player.address, 3, '...')}</span>
               <span tw='text-white text-[19px] font-backbeat'>{player.damage}</span>
             </div>
           ))}

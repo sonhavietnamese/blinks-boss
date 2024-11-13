@@ -34,8 +34,8 @@ export async function GET() {
   const response: ActionGetResponse = {
     type: ActionType.ACTION,
     icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
-    title: 'Bibada | Poisonous Planet',
-    description: 'Damage Bibada to get rewards!',
+    title: '[Testnet] Blinks Boss - Season 1',
+    description: 'Gear up! Join the squad and take down Minitos for SOL rewards!',
     label: '',
     links: {
       actions: [
@@ -57,6 +57,29 @@ export async function GET() {
 }
 
 export const OPTIONS = GET
+
+const actions = [
+  {
+    label: `⚔️ 100 DMG`,
+    href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=100&type=${ActionType.TRANSACTION}`,
+    type: ActionType.TRANSACTION,
+  },
+  {
+    label: `⚔️ 1,000 DMG`,
+    href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=1000&type=${ActionType.TRANSACTION}`,
+    type: ActionType.TRANSACTION,
+  },
+  {
+    label: `⚔️ 5,000 DMG`,
+    href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=5000&type=${ActionType.TRANSACTION}`,
+    type: ActionType.TRANSACTION,
+  },
+  // {
+  //   label: `Stats`,
+  //   href: `/api/blinks/boss?action=${Action.STATS}&type=${ActionType.EXTERNAL_LINK}`,
+  //   type: ActionType.EXTERNAL_LINK,
+  // },
+]
 
 export async function POST(req: Request) {
   const body = (await req.json()) as { account: string; signature: string }
@@ -200,40 +223,17 @@ export async function POST(req: Request) {
   if (action === Action.START && type === ActionType.POST) {
     payload = {
       type: ActionType.POST,
-      message: `Form submitted by account ${body.account}`,
       links: {
         next: {
           type: ActionType.INLINE,
           action: {
-            description: `Started`,
+            description: 'Minitos is focking strong because of the aura of Mars. Send it to the Hell!',
             icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
-            // icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
-            label: ``,
-            title: `MeepMeep | Bibada`,
+            label: '',
+            title: '[Testnet] Blinks Boss - Season 1',
             type: ActionType.ACTION,
             links: {
-              actions: [
-                {
-                  label: `⚔️ 100 DMG`,
-                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=100&type=${ActionType.TRANSACTION}`,
-                  type: ActionType.TRANSACTION,
-                },
-                {
-                  label: `⚔️ 1,000 DMG`,
-                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=1000&type=${ActionType.TRANSACTION}`,
-                  type: ActionType.TRANSACTION,
-                },
-                {
-                  label: `⚔️ 5,000 DMG`,
-                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=5000&type=${ActionType.TRANSACTION}`,
-                  type: ActionType.TRANSACTION,
-                },
-                {
-                  label: `Stats`,
-                  href: `/api/blinks/boss?action=${Action.STATS}&type=${ActionType.EXTERNAL_LINK}`,
-                  type: ActionType.EXTERNAL_LINK,
-                },
-              ],
+              actions: actions,
             },
           },
         },
@@ -245,33 +245,11 @@ export async function POST(req: Request) {
     payload = {
       type: ActionType.ACTION,
       icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
-      // icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
-      title: 'Bibada | Poisonous Planet',
-      description: 'Damage Bibada to get rewards!',
+      title: '[Testnet] Blinks Boss - Season 1',
+      description: '',
       label: '',
       links: {
-        actions: [
-          {
-            label: `⚔️ 100 DMG`,
-            href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=100&type=${ActionType.TRANSACTION}`,
-            type: ActionType.TRANSACTION,
-          },
-          {
-            label: `⚔️ 1,000 DMG`,
-            href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=1000&type=${ActionType.TRANSACTION}`,
-            type: ActionType.TRANSACTION,
-          },
-          {
-            label: `⚔️ 5,000 DMG`,
-            href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=5000&type=${ActionType.TRANSACTION}`,
-            type: ActionType.TRANSACTION,
-          },
-          {
-            label: `Stats`,
-            href: `/api/blinks/boss?action=${Action.STATS}&type=${ActionType.EXTERNAL_LINK}`,
-            type: ActionType.EXTERNAL_LINK,
-          },
-        ],
+        actions: actions,
       },
     }
   }
@@ -285,32 +263,11 @@ export async function POST(req: Request) {
           type: ActionType.INLINE,
           action: {
             icon: `${SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`,
-            title: 'Bibada | Poisonous Planet',
-            description: 'Damage Bibada to get rewards!',
+            title: '[Testnet] Blinks Boss',
+            description: 'Minitos is focking strong because of the aura of Mars. Send it to the Hell!',
             label: '',
             links: {
-              actions: [
-                {
-                  label: `⚔️ 100 DMG`,
-                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=100&type=${ActionType.TRANSACTION}`,
-                  type: ActionType.TRANSACTION,
-                },
-                {
-                  label: `⚔️ 1,000 DMG`,
-                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=1000&type=${ActionType.TRANSACTION}`,
-                  type: ActionType.TRANSACTION,
-                },
-                {
-                  label: `⚔️ 5,000 DMG`,
-                  href: `/api/blinks/boss?action=${Action.DEAL_DAMAGE}&damage=5000&type=${ActionType.TRANSACTION}`,
-                  type: ActionType.TRANSACTION,
-                },
-                {
-                  label: `Stats`,
-                  href: `/api/blinks/boss?action=${Action.STATS}&type=${ActionType.EXTERNAL_LINK}`,
-                  type: ActionType.EXTERNAL_LINK,
-                },
-              ],
+              actions: actions,
             },
           },
         },
